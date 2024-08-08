@@ -27,7 +27,7 @@ This Turborepo has some additional tools already setup for you:
 ### Installation
 
 ```
-git clone https://github.com/mantaskaveckas/nestjs-turbo
+git clone https://github.com/eresearchqut/next-nest-typescript-starter
 cd nestjs-turbo
 pnpm install
 ```
