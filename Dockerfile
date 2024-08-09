@@ -40,8 +40,8 @@ RUN turbo build --filter=${PROJECT}
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
 RUN rm -rf ./**/*/src
 
-# Final image
-FROM alpine AS runner
+# Node runner
+FROM alpine AS node
 ARG PROJECT
 
 RUN addgroup --system --gid 1001 nodejs
@@ -52,9 +52,39 @@ WORKDIR /app
 COPY --from=builder --chown=nodejs:nodejs /app .
 WORKDIR /app/apps/${PROJECT}
 
+ARG COMMAND=dist/main
+ENV COMMAND ${COMMAND}
+
 ARG PORT=8080
 ENV PORT=${PORT}
 ENV NODE_ENV=production
 EXPOSE ${PORT}
 
 CMD node dist/main
+
+
+# Next runner
+FROM alpine AS next
+ARG PROJECT
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+WORKDIR /app
+
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${PROJECT}/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${PROJECT}/.next/static ./apps/web/.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${PROJECT}/public ./apps/web/public
+
+USER nextjs
+
+ARG PORT=8080
+ENV PORT=${PORT}
+EXPOSE ${PORT}
+ENV NODE_ENV=production
+
+CMD HOSTNAME="0.0.0.0" node apps/web/server.js
+

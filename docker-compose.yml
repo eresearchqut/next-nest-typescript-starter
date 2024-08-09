@@ -1,0 +1,22 @@
+services:
+  web:
+    image: apps/web
+    build:
+      context: .
+      target: next
+      args:
+      - PROJECT=web
+      - PORT=3000
+    ports:
+      - "3000:3000"
+  api:
+    image: apps/api
+    build:
+      context: .
+      target: node
+      args:
+        - PROJECT=api
+        - PORT=3001
+    ports:
+      - "3001:3001"
+
