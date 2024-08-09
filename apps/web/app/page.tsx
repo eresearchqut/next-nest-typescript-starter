@@ -5,6 +5,8 @@ import { Card } from "@repo/ui/card";
 import { Code } from "@repo/ui/code";
 import styles from "./page.module.css";
 import { useQuery } from "@tanstack/react-query";
+import { apiUrl } from "./actions"
+
 
 function Gradient({
   conic,
@@ -53,8 +55,9 @@ const LINKS = [
   },
 ];
 
+
 async function getHello() {
-  return (await fetch("http://localhost:3001").then((res) => res.json())) as {
+  return (await apiUrl().then((apiUrl) => fetch(apiUrl)).then((res) => res.json())) as {
     message: string;
   };
 }
