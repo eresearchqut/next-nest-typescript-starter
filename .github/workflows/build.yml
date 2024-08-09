@@ -1,0 +1,23 @@
+name: build
+on:
+  push:
+jobs:
+  build:
+    runs-on:
+      - linux
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - run: corepack enable
+      - name: Configure caching
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: pnpm
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Build
+        run: pnpm build
