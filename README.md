@@ -28,7 +28,7 @@ This Turborepo has some additional tools already setup for you:
 
 ```
 git clone https://github.com/eresearchqut/next-nest-typescript-starter
-cd nestjs-turbo
+cd next-nest-typescript-starter
 pnpm install
 ```
 
@@ -39,7 +39,7 @@ _Hint: If you'd like to clone the repository without the git history, you can us
 To build all apps and packages, run the following command:
 
 ```
-cd nestjs-turbo
+cd next-nest-typescript-starter
 pnpm build
 ```
 
@@ -48,7 +48,7 @@ pnpm build
 To develop all apps and packages, run the following command:
 
 ```
-cd nestjs-turbo
+cd next-nest-typescript-starter
 pnpm dev
 ```
 
@@ -60,7 +60,7 @@ By default, Turborepo will cache locally. To enable Remote Caching you will need
 
 ```
 cd my-turborepo
-npx nestjs-turbo
+npx next-nest-typescript-starter
 ```
 
 This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
